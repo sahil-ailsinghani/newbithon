@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediTrack — Medication Adherence</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="features.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo">Medi<span>Track</span></div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-pill" id="clock"></div>
+    <div class="avatar">AR</div>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section-label">Overview</div>
+  <div class="nav-item active" onclick="navigate('dashboard', this)">
+    <span class="nav-icon">⊞</span> Dashboard
+  </div>
+  <div class="nav-item" onclick="navigate('reports', this)">
+    <span class="nav-icon">↗</span> Summary & Reports
+  </div>
+
+  <div class="sidebar-section-label">Medication</div>
+  <div class="nav-item" onclick="navigate('schedule', this)">
+    <span class="nav-icon">◷</span> Schedule
+  </div>
+  <div class="nav-item" onclick="navigate('reminders', this)">
+    <span class="nav-icon">◎</span> Reminders
+  </div>
+  <div class="nav-item" onclick="navigate('tracker', this)">
+    <span class="nav-icon">✓</span> Adherence Tracker
+  </div>
+  <div class="nav-item" onclick="navigate('errors', this)">
+    <span class="nav-icon">⚠</span> Dose Error Log
+  </div>
+
+  <div class="sidebar-section-label">More</div>
+  <div class="nav-item" onclick="navigate('tips', this)">
+    <span class="nav-icon">◈</span> Insights & Tips
+  </div>
+  <div class="nav-item" onclick="navigate('settings', this)">
+    <span class="nav-icon">⚙</span> Settings
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="patient-card">
+      <div class="patient-avatar">AR</div>
+      <div class="patient-info">
+        <div class="patient-name">Arjun Rao</div>
+        <div class="patient-meta">Patient ID #MT-2041</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="page active">
+    <div class="page-header">
+      <div class="page-title">Good morning, Arjun.</div>
+      <div class="page-subtitle">Here's your medication overview for today — Sunday, 8 March 2026.</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card green">
+        <span class="stat-icon">💊</span>
+        <div class="stat-label">Adherence Rate</div>
+        <div class="stat-value">78%</div>
+        <span class="stat-badge badge-amber">↑ 3% this week</span>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-icon">⚠️</span>
+        <div class="stat-label">Dose Errors</div>
+        <div class="stat-value">15</div>
+        <span class="stat-badge badge-red">↓ 2 from last month</span>
+      </div>
+      <div class="stat-card amber">
+        <span class="stat-icon">🔕</span>
+        <div class="stat-label">Missed Doses</div>
+        <div class="stat-value">8</div>
+        <span class="stat-badge badge-amber">This month</span>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-icon">🔔</span>
+        <div class="stat-label">Next Reminder</div>
+        <div class="stat-value">8 PM</div>
+        <span class="stat-badge badge-green">Atorvastatin</span>
+      </div>
+    </div>
+
+    <div class="ring-wrap">
+      <div class="ring-card" style="max-width:360px">
+        <svg class="ring-svg" width="80" height="80" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="35"/>
+          <circle class="ring-fill" cx="40" cy="40" r="35"/>
+          <text class="ring-text" x="40" y="40">78%</text>
+        </svg>
+        <div class="ring-info">
+          <h4>Monthly Adherence</h4>
+          <p>You've taken 78 out of 100 scheduled doses this month. Keep it going — you're close to your 85% goal.</p>
+          <div style="margin-top:10px">
+            <span class="stat-badge badge-green">Goal: 85%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="flex:1; margin-bottom:0">
+        <div class="card-header">
+          <span class="card-title">Weekly Doses Taken</span>
+          <button class="card-action">View all</button>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-col"><div class="bar" style="height:55px"></div><span class="bar-label">Mon</span></div>
+          <div class="bar-col"><div class="bar" style="height:80px"></div><span class="bar-label">Tue</span></div>
+          <div class="bar-col"><div class="bar" style="height:45px"></div><span class="bar-label">Wed</span></div>
+          <div class="bar-col"><div class="bar" style="height:70px"></div><span class="bar-label">Thu</span></div>
+          <div class="bar-col"><div class="bar" style="height:60px"></div><span class="bar-label">Fri</span></div>
+          <div class="bar-col"><div class="bar" style="height:30px"></div><span class="bar-label">Sat</span></div>
+          <div class="bar-col"><div class="bar" style="height:20px; opacity:0.35"></div><span class="bar-label">Sun</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Today's Schedule</span>
+        <button class="card-action" onclick="navigate('schedule', null)">Full schedule →</button>
+      </div>
+      <div class="med-list">
+        <div class="med-item">
+          <span class="med-time">8:00 AM</span>
+          <div class="med-dot" style="background:#4a9e6b"></div>
+          <div class="med-name">Metformin <span class="med-dose">500mg</span></div>
+          <span class="med-status status-taken">✓ Taken</span>
+        </div>
+        <div class="med-item">
+          <span class="med-time">1:00 PM</span>
+          <div class="med-dot" style="background:#e8a84c"></div>
+          <div class="med-name">Vitamin D3 <span class="med-dose">1000 IU</span></div>
+          <span class="med-status status-due">● Due</span>
+        </div>
+        <div class="med-item">
+          <span class="med-time">8:00 PM</span>
+          <div class="med-dot" style="background:#4a7abe"></div>
+          <div class="med-name">Atorvastatin <span class="med-dose">20mg</span></div>
+          <span class="med-status status-due">● Upcoming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div id="reports" class="page">
+    <div class="page-header">
+      <div class="page-title">Summary & Reports</div>
+      <div class="page-subtitle">Adherence trends and downloadable summaries.</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Monthly Overview – March 2026</span>
+        <button class="btn btn-primary btn-sm" onclick="showToast">Generate PDF</button>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="stat-label" style="margin-bottom:6px">Overall Adherence</div>
+          <div style="height:8px; background:var(--surface2); border-radius:99px; overflow:hidden">
+            <div style="width:78%; height:100%; background:var(--accent); border-radius:99px;"></div>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:5px">78 / 100 doses taken</div>
+        </div>
+        <div>
+          <div class="stat-label" style="margin-bottom:6px">Goal Progress</div>
+          <div style="height:8px; background:var(--surface2); border-radius:99px; overflow:hidden">
+            <div style="width:85%; height:100%; background:var(--accent2); border-radius:99px; opacity:0.7"></div>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:5px">85% target – 7% gap remaining</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="stat-card green" style="margin:0">
+          <div class="stat-label">Best Streak</div>
+          <div class="stat-value" style="font-size:22px">12 days</div>
+        </div>
+        <div class="stat-card amber" style="margin:0">
+          <div class="stat-label">Avg. Daily Score</div>
+          <div class="stat-value" style="font-size:22px">2.5 / 3</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="showToast">Export CSV</button>
+      <button class="btn btn-outline" onclick="showToast">Share with Doctor</button>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div id="schedule" class="page">
+    <div class="page-header">
+      <div class="page-title">Medication Schedule</div>
+      <div class="page-subtitle">All prescribed medications and their timings.</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Daily Medications</span>
+        <button class="card-action" onclick="showAddMedForm()">+ Add medication</button>
+      </div>
+      <div class="med-list" id="med-list">
+        <div class="med-item">
+          <span class="med-time">8:00 AM</span>
+          <div class="med-dot" style="background:#4a9e6b"></div>
+          <div class="med-name">Metformin <span class="med-dose">500mg · With breakfast</span></div>
+          <span class="med-status status-taken">✓ Taken</span>
+        </div>
+        <div class="med-item">
+          <span class="med-time">1:00 PM</span>
+          <div class="med-dot" style="background:#e8a84c"></div>
+          <div class="med-name">Vitamin D3 <span class="med-dose">1000 IU · With food</span></div>
+          <span class="med-status status-due">● Due</span>
+        </div>
+        <div class="med-item">
+          <span class="med-time">8:00 PM</span>
+          <div class="med-dot" style="background:#4a7abe"></div>
+          <div class="med-name">Atorvastatin <span class="med-dose">20mg · Before bed</span></div>
+          <span class="med-status status-due">● Upcoming</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="add-med-form" style="display:none">
+      <div class="card-header">
+        <span class="card-title">Add New Medication</span>
+        <button class="card-action" onclick="hideAddMedForm()">✕ Close</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Medication Name</label>
+          <input type="text" id="med-name-input" placeholder="e.g. Amlodipine">
+        </div>
+        <div class="form-group">
+          <label>Dosage</label>
+          <input type="text" id="med-dose-input" placeholder="e.g. 5mg">
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time" id="med-time-input">
+        </div>
+        <div class="form-group">
+          <label>Instructions</label>
+          <input type="text" id="med-note-input" placeholder="e.g. After meals">
+        </div>
+      </div>
+      <div style="margin-top:16px">
+        <button class="btn btn-accent" onclick="addMedication()">Add to Schedule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMINDERS -->
+  <div id="reminders" class="page">
+    <div class="page-header">
+      <div class="page-title">Reminders</div>
+      <div class="page-subtitle">Configure alerts so you never miss a dose.</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Active Reminders</span>
+      </div>
+      <div class="reminder-list">
+        <div class="reminder-item">
+          <span class="reminder-icon">💊</span>
+          <div class="reminder-info">
+            <div class="reminder-name">Metformin – Morning</div>
+            <div class="reminder-time">Every day · 8:00 AM</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="reminder-item">
+          <span class="reminder-icon">🌿</span>
+          <div class="reminder-info">
+            <div class="reminder-name">Vitamin D3 – Afternoon</div>
+            <div class="reminder-time">Every day · 1:00 PM</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="reminder-item">
+          <span class="reminder-icon">🌙</span>
+          <div class="reminder-info">
+            <div class="reminder-name">Atorvastatin – Night</div>
+            <div class="reminder-time">Every day · 8:00 PM</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="showToast">+ Add New Reminder</button>
+  </div>
+
+  <!-- DOSE ERROR LOG -->
+  <div id="errors" class="page">
+    <div class="page-header">
+      <div class="page-title">Dose Error Log</div>
+      <div class="page-subtitle">Review missed, delayed, or incorrect medication events.</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Recent Errors</span>
+        <button class="card-action" onclick="showToast">Clear all</button>
+      </div>
+      <div class="error-list">
+        <div class="error-item">
+          <span class="error-icon">🔕</span>
+          <div class="error-body">
+            <div class="error-title">Missed Dose — Metformin</div>
+            <div class="error-meta">Today · 8:00 AM</div>
+          </div>
+        </div>
+        <div class="error-item">
+          <span class="error-icon">⚠️</span>
+          <div class="error-body">
+            <div class="error-title">Wrong Medication Taken</div>
+            <div class="error-meta">Yesterday · Evening</div>
+          </div>
+        </div>
+        <div class="error-item">
+          <span class="error-icon">⏰</span>
+          <div class="error-body">
+            <div class="error-title">Delayed Dose — Atorvastatin</div>
+            <div class="error-meta">3 Mar 2026 · Taken 2 hrs late</div>
+          </div>
+        </div>
+        <div class="error-item">
+          <span class="error-icon">🔕</span>
+          <div class="error-body">
+            <div class="error-title">Missed Dose — Vitamin D3</div>
+            <div class="error-meta">1 Mar 2026 · 1:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACKER -->
+  <div id="tracker" class="page">
+    <div class="page-header">
+      <div class="page-title">Adherence Tracker</div>
+      <div class="page-subtitle">Mark daily doses and monitor your weekly pattern.</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">This Week — March 2026</span>
+      </div>
+      <div class="week-grid">
+        <div class="day-cell taken"><span class="day-name">Mon</span><span class="day-num">2</span></div>
+        <div class="day-cell taken"><span class="day-name">Tue</span><span class="day-num">3</span></div>
+        <div class="day-cell missed"><span class="day-name">Wed</span><span class="day-num">4</span></div>
+        <div class="day-cell taken"><span class="day-name">Thu</span><span class="day-num">5</span></div>
+        <div class="day-cell taken"><span class="day-name">Fri</span><span class="day-num">6</span></div>
+        <div class="day-cell taken"><span class="day-name">Sat</span><span class="day-num">7</span></div>
+        <div class="day-cell today" onclick="markToday(this)"><span class="day-name">Sun</span><span class="day-num">8</span></div>
+      </div>
+      <div style="display:flex; gap:14px; font-size:12px; color:var(--text-muted); margin-bottom:18px; flex-wrap:wrap">
+        <span>🟢 Taken</span>
+        <span>🔴 Missed</span>
+        <span>⬜ Not recorded</span>
+      </div>
+      <div class="tracker-actions">
+        <button class="btn btn-accent" onclick="showToast">Mark Dose Taken</button>
+        <button class="btn btn-outline" onclick="showToast">Skip Today</button>
+        <button class="btn btn-danger" onclick="showToast">Log Error</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div id="tips" class="page">
+    <div class="page-header">
+      <div class="page-title">Insights & Tips</div>
+      <div class="page-subtitle">Personalised guidance to improve your medication habits.</div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-emoji">🗂️</div>
+        <div class="tip-title">Use a Pill Organiser</div>
+        <div class="tip-text">Sorting medications weekly reduces morning confusion and helps you spot missed doses at a glance.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-emoji">🔔</div>
+        <div class="tip-title">Pair with a Daily Habit</div>
+        <div class="tip-text">Linking a dose to brushing your teeth or morning tea makes it automatic over time.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-emoji">📋</div>
+        <div class="tip-title">Follow Your Prescription</div>
+        <div class="tip-text">Never skip doses even when feeling better. Stopping early can reduce the treatment's effectiveness.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-emoji">🥤</div>
+        <div class="tip-title">Hydration Matters</div>
+        <div class="tip-text">Most oral medications should be taken with a full glass of water to aid absorption and reduce stomach upset.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-emoji">📊</div>
+        <div class="tip-title">Track Your Streaks</div>
+        <div class="tip-text">Your current best streak is 12 days. Aim to beat it — consistency is the single biggest factor in outcomes.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-emoji">🩺</div>
+        <div class="tip-title">Check In with Your Doctor</div>
+        <div class="tip-text">Share your monthly adherence report during visits. It helps doctors make better dosing adjustments.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="settings" class="page">
+    <div class="page-header">
+      <div class="page-title">Settings</div>
+      <div class="page-subtitle">Manage your preferences, account, and notification behaviour.</div>
+    </div>
+    <div class="card">
+      <div class="settings-group">
+        <div class="settings-group-title">Notifications</div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Push Notifications</div>
+            <div class="setting-desc">Receive dose reminders on your device</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Email Summaries</div>
+            <div class="setting-desc">Weekly adherence reports to your email</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Missed Dose Alerts</div>
+            <div class="setting-desc">Alert 30 min after a scheduled dose</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked onchange="showToast">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">Account</div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Patient Name</div>
+            <div class="setting-desc">Arjun Rao</div>
+          </div>
+          <button class="btn btn-outline" onclick="showToast">Edit</button>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Doctor Email</div>
+            <div class="setting-desc">dr.sharma@clinic.in</div>
+          </div>
+          <button class="btn btn-outline" onclick="showToast">Edit</button>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-danger" onclick="showToast">Clear All Data</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-msg">Done!</span>
+</div>
+
+<script>
+// Clock
+
+// Sidebar
+let sidebarOpen = false;
+function toggleSidebar() {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('open', sidebarOpen);
+  document.getElementById('overlay').classList.toggle('visible', sidebarOpen);
+  document.getElementById('hamburger').classList.toggle('open', sidebarOpen);
+}
+function closeSidebar() {
+  sidebarOpen = false;
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('visible');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// Navigation
+function navigate(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+  closeSidebar();
+}
+
+// Toast
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// Add medication form
+function showAddMedForm() {
+  document.getElementById('add-med-form').style.display = 'block';
+}
+function hideAddMedForm() {
+  document.getElementById('add-med-form').style.display = 'none';
+}
+
+const dotColors = ['#4a9e6b','#e8a84c','#4a7abe','#c95c3e','#9b59b6','#1abc9c'];
+let medCount = 3;
+
+function addMedication() {
+  const name  = document.getElementById('med-name-input').value.trim();
+  const dose  = document.getElementById('med-dose-input').value.trim();
+  const time  = document.getElementById('med-time-input').value;
+  const note  = document.getElementById('med-note-input').value.trim();
+
+
+
+  // Format time
+  const [hh, mm] = time.split(':');
+  const h = parseInt(hh);
+  const period = h >= 12 ? 'PM' : 'AM';
+  const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
+  const displayTime = `${displayH}:${mm} ${period}`;
+
+  const color = dotColors[medCount % dotColors.length];
+  medCount++;
+
+  const item = document.createElement('div');
+  item.className = 'med-item';
+  item.innerHTML = `
+    <span class="med-time">${displayTime}</span>
+    <div class="med-dot" style="background:${color}"></div>
+    <div class="med-name">${name} <span class="med-dose">${dose}${note ? ' · ' + note : ''}</span></div>
+    <span class="med-status status-due">● Upcoming</span>
+  `;
+
+  document.getElementById('med-list').appendChild(item);
+
+  // Reset
+  document.getElementById('med-name-input').value = '';
+  document.getElementById('med-dose-input').value = '';
+  document.getElementById('med-time-input').value = '';
+  document.getElementById('med-note-input').value = '';
+  hideAddMedForm();
+  
+}
+
+function markToday(el) {
+  el.classList.toggle('taken');
+ 
+}
+</script>
+</body>
+</html>
